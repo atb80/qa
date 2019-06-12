@@ -1,6 +1,13 @@
 package com.jsystems.qa.frontend.test;
 
 import com.jsystems.qa.frontend.Configuration;
+import org.junit.jupiter.api.Test;
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.util.Set;
 
 public class WindowsTest extends ConfigFrontend {
     @Test

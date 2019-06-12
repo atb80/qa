@@ -3,17 +3,25 @@ package com.jsystems.qa.frontend.page;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 
 import java.util.IdentityHashMap;
 
 public class LoginPage extends BasePage {
 
-    public IdentityHashMap<Object, Object>.EntrySet passwordInput;
-
     public LoginPage(WebDriver driver) {
         super(driver);
+        PageFactory.initElements(driver, this);
     }
-    public WebElement emailInput = driver.findElement(By.id("//*[@id=\"usernameOrEmail\"]"));
-    public WebElement buttonContinue = driver.findElement(By.cssSelector("/html/body/div[1]/div/div/div[1]/div/main/div/div[1]/div/form/div[1]/div[2]/button"));
 
+    @FindBy(id = "usernameOrEmail")
+    public WebElement emailInput;
+    //    public WebElement emailInput = driver.findElement(By.id("usernameOrEmail"));
+    @FindBy(css = ".button.form-button")
+    public WebElement buttonContinue;
+//    public WebElement buttonContinue = driver.findElement(By.cssSelector(".button.form-button"));
+
+    @FindBy(id = "password")
+    public WebElement passwordInput;
 }

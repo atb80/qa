@@ -34,7 +34,7 @@ public class ParameterizedClassTest {
 
     @DisplayName("Second parametrized test")
     @ParameterizedTest(name = "Parametrized test with value {0}")
-    @ValueSource(strings = {"Hello", "hello junit", "hello student"})
+    @ValueSource(strings = {"Hello", "Hello junit", "Hello student"})
     public void paramFirstTest(String value) {
         assertTrue(value.contains("Hello"));
 
@@ -42,18 +42,18 @@ public class ParameterizedClassTest {
 
     @DisplayName("csv vALEUE PARAPETRIZED TEST")
     @ParameterizedTest(name = "Parametrized test with value name: {0} and value : {1}")
-    @CsvSource(value = {"Hello, 5", "HelloJunit 5", "Hello 5!, 25"}, delimiter = ',')
+    @CsvSource(value = {"Hello, 5", "HelloJunit 5, 15", "Hello 5!, 25"}, delimiter = ',')
     public void paramMultiArgTest(String param1, int param2) {
-        assertTrue(param1.contains("hello"));
+        assertTrue(param1.contains("Hello"));
         assertTrue(param2 % 5 == 0);
 
     }
 
     @DisplayName("CSV file source parametrized test")
     @ParameterizedTest(name = "Parametrized test with data from csv file, name: {0} and value: {1}")
-    @CsvFileSource(resources = ("plik.csv"), delimiter = ',')
+    @CsvFileSource(resources = ("/plik.csv"), delimiter = ',')
     public void csvFileSourceTest(String param1, int param2) {
-        assertTrue(param1.contains("hello"));
+        assertTrue(param1.contains("Hello"));
         assertTrue(param2 % 5 == 0);
 
     }

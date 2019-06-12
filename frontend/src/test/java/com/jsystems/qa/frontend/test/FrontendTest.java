@@ -3,59 +3,80 @@ package com.jsystems.qa.frontend.test;
 import com.jsystems.qa.frontend.Configuration;
 import com.jsystems.qa.frontend.page.LoginPage;
 import com.jsystems.qa.frontend.page.MainWordpressPage;
+import com.jsystems.qa.frontend.page.UserPage;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.interactions.Actions;
 
-import static java.lang.Thread.sleep;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class FrontendTest extends ConfigFrontend {
+    MainWordpressPage wordporessPage;
+    LoginPage loginPage;
+    UserPage userPage;
 
-
-MainWordpressPage wordpressPage;
-LoginPage loginPage;
     @Test
-    public void firstFrontTest () {
-
-        wordpressPage = new MainWordpressPage(driver);
-//        assertTrue(wordpressPage.buildEWebsite.isDisplayed());
-//        assertEquals(wordpressPage.buildEWebsite.getText(), "Build a website");
-
-        assertTrue(wordpressPage.login.isDisplayed());
-        assertEquals(wordpressPage.login.getText(), "log in");
-        wordpressPage.login.click();
+    public void firstFrontTest() {
+        wordporessPage = new MainWordpressPage(driver);
+        assertTrue(wordporessPage.buildEWebsite.isDisplayed());
+        assertEquals(wordporessPage.buildEWebsite.getText(), "Build a website,");
+        assertTrue(wordporessPage.login.isDisplayed());
+        assertEquals(wordporessPage.login.getText(), "Log In");
+        wordporessPage.login.click();
     }
+
     @Test
-    public void LoginTest(){
-        wordpressPage = new MainWordpressPage(driver);
-        wordpressPage.WaitForVisiblityOfElement(wordpressPage.login, 30);
-        wordpressPage.login.click();
+    public void loginTest() {
+        login();
+
+        userPage = new UserPage(driver);
+        userPage.WaitForVisiblityOfElement(userPage.userAvatar, 30);
+        assertTrue(userPage.userAvatar.isDisplayed());
+
+//        Alert alert = driver.switchTo().alert();
+//        alert.accept();
+//        driver.switchTo().alert();
+
+    }
+
+    @Test
+    public void loginActionTest() {
+
+        wordporessPage = new MainWordpressPage(driver);
+        wordporessPage.WaitForVisiblityOfElement(wordporessPage.login, 30);
+        wordporessPage.login.click();
+        loginPage = new LoginPage(driver);
+        loginPage.WaitForVisiblityOfElement(loginPage.emailInput, 30);
+
+        Actions action = new Actions(driver);
+        action
+                .moveToElement(loginPage.emailInput)
+                .sendKeys(Configuration.LOGIN)
+                .sendKeys(Keys.chord(Keys.ENTER))
+                .build()
+                .perform();
+
+        loginPage.WaitForVisiblityOfElement(loginPage.passwordInput, 30);
+        assertTrue(loginPage.buttonContinue.getText().equals("Log In"));
+    }
+
+    private void login() {
+        wordporessPage = new MainWordpressPage(driver);
+        wordporessPage.WaitForVisiblityOfElement(wordporessPage.login, 30);
+        wordporessPage.login.click();
         loginPage = new LoginPage(driver);
         loginPage.WaitForVisiblityOfElement(loginPage.emailInput, 30);
         loginPage.emailInput.clear();
         loginPage.emailInput.sendKeys(Configuration.LOGIN);
         loginPage.buttonContinue.click();
-        loginPage.waitForVisibilityOfElement(loginPage.passwordInput, 30);
+        loginPage.WaitForVisiblityOfElement(loginPage.passwordInput, 30);
         loginPage.passwordInput.clear();
         loginPage.passwordInput.sendKeys(Configuration.PASSWORD);
         loginPage.buttonContinue.click();
-
     }
 
 
-//
-//        driver.get("https://wordpress.com");
-  //      try {
-    //        sleep(10000);
-      //  } catch (InterruptedException e) {
-        //    e.printStackTrace();
-//        WebElement login = driver.findElement(By.cssSelector("<a role=\"menuitem\" class=\"x-nav-link x-link\" href=\"//wordpress.com/wp-login.php?redirect_to=https%3A%2F%2Fwordpress.com%2F\" title=\"Log In\">\n" +
-//                "\t\t\t\t\t\t\t\t\t\t\tLog In\t\t\t\t\t\t\t\t\t\t</a>"));
-//        assertTrue(login.isDisplayed());
-//        assertEquals(login.getText(), "Log in");
-//        login.click();
-    }
+}
 
 

@@ -14,29 +14,29 @@ public class ConfigFrontend {
     WebDriver driver;
 
     @BeforeAll
-    public static void setUpAll(){
-        System.setProperty("webdriver.chrome.driver", ClassLoader.getSystemClassLoader().getResource("chromedriver.exe").getFile());
+    public static void setUpAll() {
+        System.setProperty("webdriver.chrome.driver", ClassLoader.getSystemClassLoader().getResource("driver/chromedriver.exe").getFile());
     }
 
     @BeforeEach
-public void setUpEach(){
+    public void setUpEach() {
 
         String browser = Configuration.getBROWSER();
+
         if (browser.equals("chrome")) {
             driver = new ChromeDriver();
-        }
-        else if (browser.equals("firefox")){
-        driver = new FirefoxDriver();
+        } else if (browser.equals("firefox")) {
+            driver = new FirefoxDriver();
 
-            }
+        }
         setDriver();
         driver.get(Configuration.BASE_URL);
 
-        }
+    }
 
 
     @AfterEach
-    public void tearDown(){
+    public void tearDown() {
         driver.quit();
     }
 

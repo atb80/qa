@@ -12,11 +12,15 @@ public class MainWordpressPage extends BasePage {
         super(driver);
         PageFactory.initElements(driver, this);
     }
-    @FindBy(css ="<a role=\"menuitem\" class=\"x-nav-link x-link\" href=\"//wordpress.com/wp-login.php?redirect_to=https%3A%2F%2Fwordpress.com%2F\" title=\"Log In\">\n" +
-            "\t\t\t\t\t\t\t\t\t\t\tLog In\t\t\t\t\t\t\t\t\t\t</a>" )
+
+    @FindBy(css = ".x-nav-item.x-nav-item--wide.x-nav-item--logged-in a.x-nav-link.x-link")
+    public WebElement login;
+
+//    public WebElement login = driver.findElement(By.cssSelector(".x-nav-item.x-nav-item--wide.x-nav-item--logged-in" +
+//            " a.x-nav-link.x-link"));
+
+    @FindBy(css = "#lpc-headline .lpc-headline-container.lp-headline-container h1 span:nth-child(1)")
     public WebElement buildEWebsite;
-
-    //public WebElement login = driver.findElement(By.cssSelector("<a role=\"menuitem\" class=\"x-nav-link x-link\" href=\"//wordpress.com/wp-login.php?redirect_to=https%3A%2F%2Fwordpress.com%2F\" title=\"Log In\">\n" +
-        //    "\t\t\t\t\t\t\t\t\t\t\tLog In\t\t\t\t\t\t\t\t\t\t</a>"));
-
+//    public WebElement buildEWebsite = driver.findElement(By.cssSelector("#lpc-headline " +
+//            ".lpc-headline-container.lp-headline-container h1 span:nth-child(1)"));
 }
