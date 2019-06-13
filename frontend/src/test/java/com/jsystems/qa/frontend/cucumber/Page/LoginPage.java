@@ -1,12 +1,10 @@
-package com.jsystems.qa.frontend.page;
+package com.jsystems.qa.frontend.cucumber.Page;
 
-import org.openqa.selenium.By;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-
-import java.util.IdentityHashMap;
 
 public class LoginPage extends BasePage {
 
