@@ -10,33 +10,45 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
+import java.net.URISyntaxException;
+import java.nio.file.Paths;
 import java.util.concurrent.TimeUnit;
 
 public class CucumberStepConfig {
 
     WebDriver driver;
+    String chromePath;
+    String fireFoxPath;
 
+    {
+        try {
+            chromePath = Paths.get(getClass().getClassLoader().getResource("driver/chromedriver.exe").toURI()).toFile().getAbsolutePath();
+            fireFoxPath = Paths.get(getClass().getClassLoader().getResource("driver/geckodriver.exe").toURI()).toFile().getAbsolutePath();
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+    }
     @Before
-        public static void setUpAll() {
-            System.setProperty("webdriver.chrome.driver", ClassLoader.getSystemClassLoader().getResource("driver/chromedriver.exe").getFile());
+    public static void setUpAll() {
+//        WebDriverManager.chromedriver().setup();
+        System.setProperty("webdriver.gecko.driver", ClassLoader.getSystemClassLoader().getResource("driver/geckodriver.exe").getFile());
+        System.setProperty("webdriver.chrome.driver", ClassLoader.getSystemClassLoader().getResource("driver/chromedriver.exe").getFile());
+    }
+
+
+
+    public WebDriver setUp() {
+        String browser = Configuration.getBROWSER();
+
+        if(browser.equals("chrome")){
+            driver = new ChromeDriver();
+        } else if(browser.equals("firefox")){
+            driver = new FirefoxDriver();
         }
 
-    public WebDriver setUp(){
-
-            String browser = Configuration.getBROWSER();
-
-            if (browser.equals("chrome")) {
-                driver = new ChromeDriver();
-            } else if (browser.equals("firefox")) {
-                driver = new FirefoxDriver();
-
-            }
-            setDriver();
-            return driver;
-
-        }
-
-
+        setDriver();
+        return driver;
+    }
 
     private void setDriver() {
         driver.manage().window().maximize();
@@ -61,6 +73,7 @@ public class CucumberStepConfig {
         }
         System.out.println("\n"+status+" End of: " + scenario.getName() + " scenario.");
         driver.quit();
+        driver = null;
+    }
 
-    }
-    }
+}
